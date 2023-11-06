@@ -1,0 +1,120 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+*{
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+body{
+  background-color: rgb(169, 164, 164);
+}
+
+
+.cards{
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* background: rgb(216, 106, 106); */
+  align-items:center ;
+}
+.card{
+  background-color: rgb(152, 77, 222);
+
+}
+.image{
+  width: auto;
+  height: 7rem;
+  
+}
+
+.naruto{
+  margin: 1rem;
+}
+NavLink .active_class{
+  color: blue;
+  border-bottom: 2px solid red;
+}
+.logo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.logo img{
+  width: 15rem;
+  height: auto;
+}
+ h2{
+  font-size: 3rem;
+  color: rgb(0, 4, 255);
+  text-shadow: 2px 2px 3px rgb(229, 255, 0);
+  font-family:math ;
+  text-transform: uppercase;
+}
+input{
+  padding: 7px;
+  border-radius: 0px;
+  border: 0;
+  outline: 0;
+  color: rgb(255, 0, 0);
+
+  text-transform: uppercase;
+  font-weight: 400;
+  font-family: Arial, Helvetica, sans-serif;
+  border-bottom: 2px solid blue;
+  background: bottom;
+}
+input:hover{
+  border-bottom: 2px solid rgb(229, 255, 0);
+  transition: .51s ease;
+  border-radius: 10px;
+  background: rgb(236, 186, 186);
+
+}
+button{
+  padding: 7px;
+  background: bottom;
+  border: 0;
+  outline: 0;
+  font-family: math;
+  text-transform: uppercase;
+  color: red;
+}
+button:hover{
+  background: rgb(200, 14, 242);
+  color: rgb(238, 234, 238);
+  transition: .24s ease-in;
+  border-radius: 10px;
+}
+.poora {
+  width: 100%;
+}
+@media (max-width:720px) {
+  .pkmnimg{
+    width: 100%;
+    height: auto;
+  }
+}
+
+.Navbar{
+  width: 100%;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgb(236, 115, 115);
+ 
+}
+.Navbar a{
+  margin: 1vw ;
+  text-decoration: none;
+}
+
+a.active{
+  color: white;
+}
