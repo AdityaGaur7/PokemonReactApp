@@ -25,7 +25,9 @@ useEffect(()=>{
   setphoto(res.data.sprites.other.home.front_default);
     } catch (error) {
       console.log("ERROR");
-      
+      setid('');
+      setaxa('Not found its Pichu 😆');
+      setphoto('https://pngshare.com/wp-content/uploads/2021/06/Twitch-Logo-Transparent-5.gif')
     }
      
   
