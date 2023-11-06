@@ -26,7 +26,7 @@ useEffect(()=>{
     } catch (error) {
       console.log("ERROR");
       setid('');
-      setaxa('Not found its Pichu 😆');
+      setaxa('Not found,its Pichu 😅');
       setphoto('https://pngshare.com/wp-content/uploads/2021/06/Twitch-Logo-Transparent-5.gif')
     }
      
