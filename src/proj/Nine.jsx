@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 // import img2 from './img/ok.jpg'
 import axios from 'axios';
 function Nine() {
-    const [pkmn,setpkmn]= useState('pikachu');
+    const [pkmn,setpkmn]= useState('');
     const [axa,setaxa]=useState();
  const [photo,setphoto]=useState();
  const [id,setid]=useState();
