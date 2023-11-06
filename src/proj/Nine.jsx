@@ -13,23 +13,33 @@ function Nine() {
 useEffect(()=>{
   // alert('hi');
   async function getdata(){
-    
+    try {
       const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${axa}`);
-      console.log(res.data.sprites.other.home.front_default); 
-      console.log(res.data.id);
+      // console.log(res.data.sprites.other.home.front_default); 
+      // console.log(res.data.id);
+      console.log(res);
+      if(res.status!=200)alert('not')
       let id =  res.data.id +'.';
       setid(id)
       setaxa(res.data.name);
   setphoto(res.data.sprites.other.home.front_default);
+    } catch (error) {
+      console.log("ERROR");
+      
+    }
+     
+  
   }
  
 getdata();
 
-}
+},[axa]
 )
 
     const srch =(e)=>{
-        setpkmn(e.target.value);
+       let inform = (e.target.value).toLowerCase();
+       
+        setpkmn(inform);
 
     }
     const setkaro=()=>{
