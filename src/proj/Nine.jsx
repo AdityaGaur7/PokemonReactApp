@@ -13,6 +13,7 @@ function Nine() {
 useEffect(()=>{
   // alert('hi');
   async function getdata(){
+    
       const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${axa}`);
       console.log(res.data.sprites.other.home.front_default); 
       console.log(res.data.id);
