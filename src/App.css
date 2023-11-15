@@ -91,6 +91,10 @@ button:hover{
   transition: .24s ease-in;
   border-radius: 10px;
 }
+.pkmnimg{
+  width: 30%;
+  height: auto;
+}
 .poora {
   width: 100%;
 }

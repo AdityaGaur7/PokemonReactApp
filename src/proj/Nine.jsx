@@ -22,7 +22,8 @@ useEffect(()=>{
       let id =  res.data.id +'.';
       setid(id)
       setaxa(res.data.name);
-  setphoto(res.data.sprites.other.home.front_default);
+  // setphoto(res.data.sprites.other.home.front_default);
+  setphoto(`https://img.pokemondb.net/artwork/large/${axa}.jpg`);
     } catch (error) {
       console.log("ERROR");
       setid('');
@@ -48,7 +49,7 @@ getdata();
         setaxa(pkmn);
         setpkmn('');
     //   setagain(photo);
-
+    setphoto(`https://img.pokemondb.net/artwork/large/${axa}.jpg`);
     }
  
   
