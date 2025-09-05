@@ -29,8 +29,9 @@ function Nine() {
   return (
     <div className="pokemon-app">
       <div className="logo">
-        <img src="/img/logo.png" alt="Pokemon Logo" />
+        <img src="\img\Pokédex_logo.png" alt="Pokemon Logo" />
       </div>
+      
 
       <GenerationSelector
         selectedGeneration={selectedGeneration}
