@@ -86,15 +86,14 @@ const PokemonDetail = () => {
         <div className="pokemon-detail-main">
           <div className="pokemon-image-section">
             <img
-              src={
-                pokemon.sprites.other?.["official-artwork"]?.front_default ||
-                pokemon.sprites.front_default ||
-                `/img/Error404.gif`
-              }
+              src={`https://play.pokemonshowdown.com/sprites/ani/${pokemon.name}.gif`}
               alt={pokemon.name}
               className="pokemon-detail-image"
               onError={(e) => {
-                e.target.src = "/img/Error404.gif";
+                e.target.src =
+                  pokemon.sprites.other?.["official-artwork"]?.front_default ||
+                  pokemon.sprites.front_default ||
+                  "/img/Error404.gif";
               }}
             />
             <div className="pokemon-types">
@@ -245,30 +244,50 @@ const PokemonDetail = () => {
         <div className="pokemon-detail-section">
           <h2>Sprites</h2>
           <div className="sprites-container">
-            {pokemon.sprites.front_default && (
-              <div className="sprite-item">
-                <img src={pokemon.sprites.front_default} alt="Front Default" />
-                <span>Front Default</span>
-              </div>
-            )}
-            {pokemon.sprites.back_default && (
-              <div className="sprite-item">
-                <img src={pokemon.sprites.back_default} alt="Back Default" />
-                <span>Back Default</span>
-              </div>
-            )}
-            {pokemon.sprites.front_shiny && (
-              <div className="sprite-item">
-                <img src={pokemon.sprites.front_shiny} alt="Front Shiny" />
-                <span>Front Shiny</span>
-              </div>
-            )}
-            {pokemon.sprites.back_shiny && (
-              <div className="sprite-item">
-                <img src={pokemon.sprites.back_shiny} alt="Back Shiny" />
-                <span>Back Shiny</span>
-              </div>
-            )}
+            <div className="sprite-item">
+              <img
+                src={`https://play.pokemonshowdown.com/sprites/ani/${pokemon.name}.gif`}
+                alt="Animated Front"
+                onError={(e) => {
+                  e.target.src =
+                    pokemon.sprites.front_default || "/img/Error404.gif";
+                }}
+              />
+              <span>Animated Front</span>
+            </div>
+            <div className="sprite-item">
+              <img
+                src={`https://play.pokemonshowdown.com/sprites/ani-back/${pokemon.name}.gif`}
+                alt="Animated Back"
+                onError={(e) => {
+                  e.target.src =
+                    pokemon.sprites.back_default || "/img/Error404.gif";
+                }}
+              />
+              <span>Animated Back</span>
+            </div>
+            <div className="sprite-item">
+              <img
+                src={`https://play.pokemonshowdown.com/sprites/ani-shiny/${pokemon.name}.gif`}
+                alt="Animated Shiny Front"
+                onError={(e) => {
+                  e.target.src =
+                    pokemon.sprites.front_shiny || "/img/Error404.gif";
+                }}
+              />
+              <span>Animated Shiny Front</span>
+            </div>
+            <div className="sprite-item">
+              <img
+                src={`https://play.pokemonshowdown.com/sprites/ani-back-shiny/${pokemon.name}.gif`}
+                alt="Animated Shiny Back"
+                onError={(e) => {
+                  e.target.src =
+                    pokemon.sprites.back_shiny || "/img/Error404.gif";
+                }}
+              />
+              <span>Animated Shiny Back</span>
+            </div>
           </div>
         </div>
       </div>

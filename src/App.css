@@ -242,6 +242,9 @@ body {
   max-height: 100%;
   object-fit: contain;
   transition: all 0.3s ease;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
 }
 
 .pokemon-image.loaded {
@@ -609,6 +612,9 @@ body {
   padding: 2rem;
   margin-bottom: 1rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
 }
 
 .pokemon-basic-info {
@@ -859,6 +865,9 @@ body {
   width: 80px;
   height: 80px;
   object-fit: contain;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
 }
 
 .sprite-item span {
