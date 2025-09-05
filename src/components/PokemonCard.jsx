@@ -53,7 +53,9 @@ const PokemonCard = ({ pokemon, onLoad }) => {
             <img
               src={
                 imageError
-                  ? "/img/Error404.gif"
+                  ? pokemon.sprites?.other?.["official-artwork"]?.front_default || pokemon.sprites?.other?.["official-artwork"]?.front_default ||
+                  pokemon.sprites?.front_default ||
+                  "/img/Error404.gif"
                   : `https://play.pokemonshowdown.com/sprites/ani/${pokemon.name}.gif`
               }
               alt={pokemon.name}
