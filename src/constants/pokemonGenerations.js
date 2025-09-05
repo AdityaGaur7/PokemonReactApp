@@ -67,4 +67,3 @@ export const POKEMON_GENERATIONS = {
 
 export const POKEMON_PER_PAGE = 20;
 export const POKEAPI_BASE_URL = 'https://pokeapi.co/api/v2';
-export const POKEMON_IMAGE_BASE_URL = 'https://img.pokemondb.net/artwork/large';

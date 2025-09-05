@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
-import { POKEMON_IMAGE_BASE_URL } from "../constants/pokemonGenerations";
+import { useNavigate } from "react-router-dom";
 
 const PokemonCard = ({ pokemon, onLoad }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
   const cardRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -35,8 +36,12 @@ const PokemonCard = ({ pokemon, onLoad }) => {
     if (onLoad) onLoad();
   };
 
+  const handleCardClick = () => {
+    navigate(`/pokemon/${pokemon.id}`);
+  };
+
   return (
-    <div ref={cardRef} className="pokemon-card">
+    <div ref={cardRef} className="pokemon-card" onClick={handleCardClick}>
       {isVisible ? (
         <div className="card-content">
           <div className="pokemon-image-container">
@@ -49,7 +54,10 @@ const PokemonCard = ({ pokemon, onLoad }) => {
               src={
                 imageError
                   ? "/img/Error404.gif"
-                  : `${POKEMON_IMAGE_BASE_URL}/${pokemon.name}.jpg`
+                  : pokemon.sprites?.other?.["official-artwork"]
+                      ?.front_default ||
+                    pokemon.sprites?.front_default ||
+                    "/img/Error404.gif"
               }
               alt={pokemon.name}
               className={`pokemon-image ${imageLoaded ? "loaded" : "loading"}`}

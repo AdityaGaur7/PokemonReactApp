@@ -1,11 +1,14 @@
 import "./App.css";
-import Ok from './proj/Nine'
+import { Routes, Route } from "react-router-dom";
+import Nine from "./proj/Nine";
+import PokemonDetail from "./components/PokemonDetail";
 
 function App() {
   return (
-    <>
-      <Ok/>
-    </>
+    <Routes>
+      <Route path="/" element={<Nine />} />
+      <Route path="/pokemon/:id" element={<PokemonDetail />} />
+    </Routes>
   );
 }
 
