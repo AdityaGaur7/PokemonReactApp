@@ -1,75 +1,68 @@
-import React, { useEffect, useState } from 'react'
-// import img2 from './img/ok.jpg'
-import axios from 'axios';
+import React, { useState } from "react";
+import { POKEMON_GENERATIONS } from "../constants/pokemonGenerations";
+import { usePokemonData } from "../hooks/usePokemonData";
+import GenerationSelector from "../components/GenerationSelector";
+import PokemonSearch from "../components/PokemonSearch";
+import PokemonCard from "../components/PokemonCard";
+import InfiniteScroll from "../components/InfiniteScroll";
+
 function Nine() {
-    const [pkmn,setpkmn]= useState();
-    const [axa,setaxa]=useState();
- const [photo,setphoto]=useState();
- const [id,setid]=useState();
+  const [selectedGeneration, setSelectedGeneration] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
 
-//    const [again,setagain]=useState();
-  
+  const generationData = POKEMON_GENERATIONS[selectedGeneration];
+  const { pokemonList, loading, error, hasMore, loadMore, searchPokemon } =
+    usePokemonData(generationData, searchTerm);
 
-useEffect(()=>{
-  // alert('hi');
-  async function getdata(){
-    try {
-      const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${axa}`);
-      // console.log(res.data.sprites.other.home.front_default); 
-      // console.log(res.data.id);
-      console.log(res);
-      if(res.status!=200)alert('not')
-      let id =  res.data.id +'.';
-      setid(id)
-      setaxa(res.data.name);
-  // setphoto(res.data.sprites.other.home.front_default);
-  setphoto(`https://img.pokemondb.net/artwork/large/${axa}.jpg`);
-    } catch (error) {
-      console.log("ERROR");
-      setid('');
-      setaxa('Not found its Pichu 😆');
-      setphoto('img/Error404.gif')
-    }
-     
-  
-  }
- 
-getdata();
+  const handleGenerationChange = (generation) => {
+    setSelectedGeneration(generation);
+    setSearchTerm("");
+    // Clear any existing search results
+    searchPokemon("");
+  };
 
-},[axa]
-)
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+    searchPokemon(term);
+  };
 
-    const srch =(e)=>{
-       let inform = (e.target.value).toLowerCase();
-       
-        setpkmn(inform);
-
-    }
-    const setkaro=()=>{
-        setaxa(pkmn);
-        setpkmn('');
-    //   setagain(photo);
-    setphoto(`https://img.pokemondb.net/artwork/large/${axa}.jpg`);
-    }
- 
-  
-   
   return (
-   
-    <div className='poora'>
-      <div className='logo'>
-      {/* <h1>Search</h1> */}
-      <img src="img/logo.png" alt="" />
+    <div className="pokemon-app">
+      <div className="logo">
+        <img src="/img/logo.png" alt="Pokemon Logo" />
       </div>
-      <input type="text" onChange={srch} value={pkmn} placeholder='Pokemon name / ID'/>
-      <button onClick={setkaro}>search</button>
-      <div className='info' style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
-      <h2>{id} </h2>
-      <h2> {axa}</h2>
-      </div>
-      <img className='pkmnimg' src={photo} alt="" />
+
+      <GenerationSelector
+        selectedGeneration={selectedGeneration}
+        onGenerationChange={handleGenerationChange}
+      />
+
+      <PokemonSearch
+        onSearch={handleSearch}
+        placeholder={`Search Pokemon in ${generationData?.name}...`}
+      />
+
+      {error && (
+        <div className="error-message">
+          <p>{error}</p>
+        </div>
+      )}
+
+      <InfiniteScroll onLoadMore={loadMore} hasMore={hasMore} loading={loading}>
+        <div className="pokemon-grid">
+          {pokemonList.map((pokemon) => (
+            <PokemonCard key={pokemon.id} pokemon={pokemon} />
+          ))}
+        </div>
+      </InfiniteScroll>
+
+      {!loading && pokemonList.length === 0 && !error && (
+        <div className="no-results">
+          <p>No Pokemon found. Try a different search term or generation.</p>
+        </div>
+      )}
     </div>
-  )
+  );
 }
 
-export default Nine
+export default Nine;
