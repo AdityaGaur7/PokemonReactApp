@@ -12,7 +12,6 @@ export const usePokemonData = (generation, searchTerm = '') => {
     const fetchPokemonData = useCallback(async (gen, search, pageNum = 1, append = false) => {
         if (!gen) return;
 
-        console.log('Fetching Pokemon data:', { gen, search, pageNum, append });
         setLoading(true);
         setError(null);
 
