@@ -7,7 +7,7 @@ const matchmakingQueue = [];
 async function fetchRandomTeam(teamSize) {
     const ids = new Set();
     while (ids.size < teamSize) {
-        ids.add(Math.floor(Math.random() * 151) + 1);
+        ids.add(Math.floor(Math.random() * 1025) + 1);
     }
     const team = [];
     for (const id of ids) {
