@@ -28,8 +28,7 @@ export default function Battle() {
       alert(winner === user.id ? "You win!" : "You lose!");
       navigate("/lobby");
     });
-    // mark ready on mount
-    socket.emit("playerReady", { roomId, userId: user.id });
+    // Ready is now manual via button
     return () => socket.disconnect();
   }, [socket, roomId, user, navigate]);
 
@@ -41,6 +40,18 @@ export default function Battle() {
   const them = game.players[opponentIndex] || { team: [] };
 
   const myAlive = (my.team || []).filter((p) => p.currentHp > 0);
+
+  const firstAlive = (team) => {
+    if (!Array.isArray(team)) return 0;
+    const idx = team.findIndex((p) => p && p.currentHp > 0);
+    return idx === -1 ? 0 : idx;
+  };
+  const myActiveIndex = Number.isInteger(my.activeIndex)
+    ? my.activeIndex
+    : firstAlive(my.team);
+  const themActiveIndex = Number.isInteger(them.activeIndex)
+    ? them.activeIndex
+    : firstAlive(them.team);
 
   const myTurn = game.turn === meIndex && game.status === "in_progress";
 
@@ -58,7 +69,7 @@ export default function Battle() {
 
   const attack = () => {
     if (!myTurn) return;
-    const active = my.team[my.activeIndex];
+    const active = my.team?.[my.activeIndex];
     if (!active || active.currentHp <= 0) return;
     socket.emit("playTurn", { roomId, userId: user.id, action: "attack" });
   };
@@ -69,6 +80,28 @@ export default function Battle() {
       <p style={{ marginBottom: 16 }}>
         Status: {game.status} | Turn: {myTurn ? "Your turn" : "Opponent turn"}
       </p>
+      {game.status === "waiting" && (
+        <div style={{ marginBottom: 16 }}>
+          <button
+            onClick={() =>
+              socket.emit("playerReady", { roomId, userId: user.id })
+            }
+            style={{
+              padding: "10px 16px",
+              borderRadius: 10,
+              background: "#1976d2",
+              color: "#fff",
+              border: 0,
+            }}
+          >
+            I'm Ready
+          </button>
+          <div style={{ color: "#666", marginTop: 8 }}>
+            Press Ready when your team is loaded. The battle starts when both
+            players are ready.
+          </div>
+        </div>
+      )}
       {/* Arena showing active Pokémon centered */}
       <div
         style={{
@@ -88,43 +121,43 @@ export default function Battle() {
           }}
         >
           <div style={{ fontWeight: 600, marginBottom: 8 }}>You</div>
-          {my.team[my.activeIndex] && (
+          {my.team[myActiveIndex] && (
             <img
-              alt={my.team[my.activeIndex].name}
-              src={`https://play.pokemonshowdown.com/sprites/ani/${
-                my.team[my.activeIndex].name
-              }.gif`}
+              alt={my.team[myActiveIndex].name}
+              src={`https://play.pokemonshowdown.com/sprites/ani/${my.team[myActiveIndex].name}.gif`}
               style={{ width: 120, height: 120 }}
               onError={(e) => {
-                e.currentTarget.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
-                  my.team[my.activeIndex].id
-                }.png`;
+                e.currentTarget.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${my.team[myActiveIndex].id}.png`;
               }}
             />
           )}
-          {my.team[my.activeIndex] && (
+          {my.team[myActiveIndex] && (
             <div style={{ marginTop: 8 }}>
               <div style={{ textTransform: "capitalize" }}>
-                {my.team[my.activeIndex].name}
+                {my.team[myActiveIndex].name}
               </div>
               <div style={{ fontSize: 12, color: "#555" }}>
-                HP {my.team[my.activeIndex].currentHp}/
-                {my.team[my.activeIndex].baseStats.hp}
+                HP {my.team[myActiveIndex].currentHp}/
+                {my.team[myActiveIndex].baseStats.hp}
               </div>
-            </div>
-          )}
-          {myTurn &&
-            my.team[my.activeIndex] &&
-            my.team[my.activeIndex].currentHp > 0 && (
-              <div style={{ marginTop: 12 }}>
+              {myTurn && my.team[myActiveIndex].currentHp > 0 && (
                 <button
                   onClick={attack}
-                  style={{ padding: "8px 12px", fontWeight: 600 }}
+                  style={{
+                    marginTop: 10,
+                    padding: "8px 14px",
+                    background: "#2e7d32",
+                    color: "#fff",
+                    border: 0,
+                    borderRadius: 6,
+                    cursor: "pointer",
+                  }}
                 >
                   Attack
                 </button>
-              </div>
-            )}
+              )}
+            </div>
+          )}
         </div>
         <div
           style={{
@@ -135,28 +168,24 @@ export default function Battle() {
           }}
         >
           <div style={{ fontWeight: 600, marginBottom: 8 }}>Opponent</div>
-          {them.team[them.activeIndex] && (
+          {them.team[themActiveIndex] && (
             <img
-              alt={them.team[them.activeIndex].name}
-              src={`https://play.pokemonshowdown.com/sprites/ani/${
-                them.team[them.activeIndex].name
-              }.gif`}
+              alt={them.team[themActiveIndex].name}
+              src={`https://play.pokemonshowdown.com/sprites/ani/${them.team[themActiveIndex].name}.gif`}
               style={{ width: 120, height: 120 }}
               onError={(e) => {
-                e.currentTarget.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
-                  them.team[them.activeIndex].id
-                }.png`;
+                e.currentTarget.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${them.team[themActiveIndex].id}.png`;
               }}
             />
           )}
-          {them.team[them.activeIndex] && (
+          {them.team[themActiveIndex] && (
             <div style={{ marginTop: 8 }}>
               <div style={{ textTransform: "capitalize" }}>
-                {them.team[them.activeIndex].name}
+                {them.team[themActiveIndex].name}
               </div>
               <div style={{ fontSize: 12, color: "#555" }}>
-                HP {them.team[them.activeIndex].currentHp}/
-                {them.team[them.activeIndex].baseStats.hp}
+                HP {them.team[themActiveIndex].currentHp}/
+                {them.team[themActiveIndex].baseStats.hp}
               </div>
             </div>
           )}
@@ -220,22 +249,14 @@ export default function Battle() {
                   />
                 </div>
               </div>
-              {myTurn &&
-                p.currentHp > 0 &&
-                (my.activeIndex === idx ? (
-                  <span
-                    style={{ fontSize: 12, color: "#2e7d32", fontWeight: 600 }}
-                  >
-                    Active
-                  </span>
-                ) : (
-                  <button
-                    onClick={() => chooseActive(idx)}
-                    style={{ padding: "6px 10px" }}
-                  >
-                    Switch
-                  </button>
-                ))}
+              {myTurn && p.currentHp > 0 && (
+                <button
+                  onClick={() => chooseActive(idx)}
+                  style={{ padding: "6px 10px" }}
+                >
+                  Switch
+                </button>
+              )}
             </div>
           ))}
         </div>

@@ -171,8 +171,6 @@ export function attachSocketHandlers(io) {
                 io.to(roomId).emit('updateGame', serializeSession(latestSwitch));
                 return;
             }
-            // Explicit attack action (default)
-            // If action is not 'switch', we resolve an attack using current active
             const opponentIndex = getOpponentIndex(currentIndex);
             const defender = session.players[opponentIndex];
             // Ensure valid active selections point to living Pokémon
