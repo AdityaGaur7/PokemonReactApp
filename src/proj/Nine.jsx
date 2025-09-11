@@ -31,7 +31,9 @@ function Nine() {
       <div className="logo">
         <img src="\img\Pokédex_logo.png" alt="Pokemon Logo" />
       </div>
-      
+      <a href="/login" className="home-link">
+        Battle
+      </a>
 
       <GenerationSelector
         selectedGeneration={selectedGeneration}
